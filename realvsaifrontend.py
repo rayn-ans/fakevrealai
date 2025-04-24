@@ -1,9 +1,9 @@
 import os
 import pandas as pd
 import numpy as np
+import torch
 from torch.utils.data import Dataset, DataLoader, random_split
 from skimage import io
-import torch
 from torchvision import transforms
 import torch.nn as nn
 import matplotlib.pyplot as plt
@@ -42,7 +42,7 @@ st.title("Real vs AI Image Detector")
 # Load the trained model
 loaded_model = Net()
 try:
-    loaded_model.load_state_dict(torch.load(r'C:\Users\Umar\Downloads\Rayyan\real_vs_ai_model.pth', map_location=torch.device('cpu')))
+    loaded_model.load_state_dict(torch.load(r'real_vs_ai_model.pth', map_location=torch.device('cpu')))
     loaded_model.eval()
 except FileNotFoundError:
     st.error("Error: 'real_vs_ai_model.pth' not found. Make sure it's in the same directory.")
@@ -72,7 +72,7 @@ if uploaded_file is not None:
     prediction_value = predict(preprocessed_image)
 
     st.subheader("Prediction:")
-    if prediction_value < 0.5:
+    if prediction_value >= 0.4:
         st.write(f"This image is likely **REAL** (Confidence: {prediction_value:.4f})")
     else:
         st.write(f"This image is likely **AI-GENERATED** (Confidence: {1 - prediction_value:.4f})")
