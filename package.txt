@@ -5,3 +5,4 @@ liblcms2-dev
 libwebp-dev
 tcl8.6-dev
 tk8.6-dev
+zlib1g-dev
